@@ -32,8 +32,6 @@ pip install -r requirements.txt
 
 !-----------------------------------------------------------------------------
 
-[BASE_DIR / 'templates'],
-
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS=[
