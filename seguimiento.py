@@ -6,7 +6,7 @@ TODO: EJEMPLO
 
 ? VIRTUAL ENV:
 virtualenv venv
-.venv\Scripts\activate
+.\venv\Scripts\activate
 
 ? PIP
 py.exe -m pip install --upgrade pip
