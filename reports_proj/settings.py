@@ -135,6 +135,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'sales' / 'static'
 ]
 
+# parte de la ruta de la imagen en la página:
 MEDIA_URL ='/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 

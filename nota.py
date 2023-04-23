@@ -30,20 +30,29 @@ cd test
 .\Scripts\activate
 pip install -r requirements.txt
 
-!-----------------------------------------------------------------------------
+? manage.py migrations
 
-STATIC_URL = 'static/'
+py manage.py showmigrations
+   sales
+   [X] 0001_initial
+   [ ] 0002_blank_test
 
-STATICFILES_DIRS=[
-    BASE_DIR / 'static',
-    BASE_DIR / 'sales' / 'static'
-]
+py manage.py migrate --fake sales 0002_blank_test (y se elimina de carpeta migrations)
+py manage.py showmigrations
+   sales
+   [X] 0001_initial
+   [X] 0002_blank_test // marca como aplicada sin ejecutar realmente la migración
 
-MEDIA_URL ='/media/'
+py manage.py migrate sales 0002_blank_test --fake
 
-MEDIA_ROOT=BASE_DIR / 'media'
+! -----------------------------------------------------------------------------
 
-!-----------------------------------------------------------------------------
+? setting.json:
+"editor.wordWrap": "on"
+
+! -----------------------------------------------------------------------------
+
+? GITHUB:
 
 usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
            [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]

@@ -25,5 +25,7 @@ urlpatterns = [
     path('', include('sales.urls', namespace='sales')),
 ]
 
+#importan media y static
+# += extiende 'urlpatterns'
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

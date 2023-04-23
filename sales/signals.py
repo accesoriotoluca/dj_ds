@@ -1,6 +1,7 @@
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
-from .models import Sale
+
+from .models import *
 
 @receiver(m2m_changed,sender=Sale.positions.through)
 def calculate_total_price(sender,instance,action,**kwargs):
