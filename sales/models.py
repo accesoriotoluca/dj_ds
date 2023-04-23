@@ -22,6 +22,8 @@ class Position(models.Model):
     - 1 Product > 1+ Position
     - tabla: Position, columna 'product' (internamente:'product_id'), tiene los id's predeterminado de tabla: Product """
     #! cuando se elemine un productose eliminan las posiciones...
+    #! Si, si elimino producto elimino position/subtotal y la venta queda sin referencia de producto/precio/cantidad.
+    #TODO: grabar string en db, en columna q copie y pegue, se eliminan objetos, pero string ('producto/precio/cantidad') xq en ADMIN aun aparece.
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
 
     quantity = models.PositiveIntegerField()
@@ -81,12 +83,23 @@ class Sale(models.Model):
             (si elimina 1 Sale o 1 Position, se eliminan todas las filas/ids relacionadas)
          'position_id': (nuevo nombre en minúsculas) tiene los id's predeterminado de tabla: Position
          'sale_id': (nuevo nombre en minúsculas) tiene los id's predeterminado de tabla: Sale
-    * para administrar objetos relacionados, manualmente en signals o mediante la escritura de código personalizado."""
+    * para administrar objetos relacionados, manualmente en signals o mediante la escritura de código personalizado.
+    * positions.all() puede llamar un query set de productos precios y cantidades
+
+    ! al eliminar 1 posicion:
+        elimino: posicion y referencia 'positions_id - sale_id' en tabla interna
+        pero en tabla Sale permanece: id, transaction, total, dates, (pero no se sabe, producto, precio y cantidad)
+
+    ! al eliminar 1 producto:
+        elimino: producto > posicion (CASCADE) > referencia 'positions_id - sale_id' en tabla interna
+        pero en tabla Sale permanece: id, transaction, total, dates, (pero no se sabe, producto, precio y cantidad)"""
     positions = models.ManyToManyField(Position)
 
     # blank=true: permite que un campo pueda ser dejado en blanco
     # overriding: 'se actualize automáticamente' con una función establecida "the same method"
-    #! falta saber porque null
+    #! falta saber porque null 
+    #! por que no puede ser blank, debe ser null y null permite dejar un campo como null
+    #! como se define total_price?
     total_price = models.FloatField(blank=True, null=True)
 
     """
@@ -114,7 +127,6 @@ class Sale(models.Model):
     ! aparentemente 'null=True' solo permite dejar el campo como 'null'
     ! incluso algunas bases de datos tratan 'vacias' como 'null' automáticamente
     - este cuenta con una funcion que establece 'now' por eso no queda blank"""
-
     created = models.DateTimeField(blank=True)
     updated = models.DateTimeField(auto_now=True)
 
