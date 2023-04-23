@@ -54,6 +54,10 @@ py manage.py migrate sales 0002_blank_test --fake
 
 ? GITHUB:
 
+git add .
+git commit -m ''
+git push origin m
+
 usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
            [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
            [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]

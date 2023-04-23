@@ -48,13 +48,22 @@ class Position(models.Model):
     created = models.DateTimeField(blank=True, null=True)
 
     #to override price
-    # save(): convension, guardar instancias de modelos en la base de datos.
-    # super(): convension, llama un método de superclase del objeto actual
-    # self: = Position, 
-    # *args y **Kwargs no los ocupa por el momento, pero la hace más flexible y permite q sea llamada con cualquier número y tipo de argumentos
-    # podría ser solo self
+    # Al parecer esta función se resuelve despues de salvar el formulario
+    # save(): convension, guardar instancias de modelos en la base de datos. 
+    #! podría ser solo save(self) 
+    # *args y **Kwargs no los ocupa por el momento...
+    # *'flexible' llamada x n# y tipo de argumentos...
     def save(self, *args, **kwargs):
+
+        #* (then we'll refere to self) price será igual a (ref de precio en esta tabla a> precio del producto) x (cantidad definida en esta tabla)
         self.price = self.product.price * self.quantity
+
+        #? super(): llama a la tabla fuera de esta función, tabla superior fuera d self función
+        # super(): convension, llama un método de superclase del objeto actual
+        #! podría ser solo save()
+        # *self ya esta definido dentro de la función y ya lo toma al inicio al ser llamada
+        # *args y **Kwargs no los ocupa por el momento...
+        # * mas 'flexible' llamada x n# y tipo de argumentos...
         return super().save(*args, **kwargs)
     
     def get_sales_id(self):
@@ -64,13 +73,16 @@ class Position(models.Model):
     def __str__(self):
         # le llama f-Strings: f" string {variante-valor} string "
         return f"id: {self.id}, product: {self.product.name}, quantity: {self.quantity}"
-        
 
+
+#! TABLA SALES >>>
 # A sale consist in many positions
 # Este creo sería como Total del subtotal
 class Sale(models.Model):
 
-    # blank=True: tambien sera iverride
+    # override in utils
+    # blank=True: no se pudo dejar solo, se puso null=True
+    # Despues se definió en otra función en utils
     transaction_id = models.CharField(max_length=12,blank=True)
 
     """ 
@@ -100,6 +112,7 @@ class Sale(models.Model):
     #! falta saber porque null 
     #! por que no puede ser blank, debe ser null y null permite dejar un campo como null
     #! como se define total_price?
+    #* será calculado a traves de signals
     total_price = models.FloatField(blank=True, null=True)
 
     """
@@ -138,29 +151,64 @@ class Sale(models.Model):
         positions_list = ", ".join([f"product: {p.product.name} price: {p.product.price} quantity: {p.quantity}" for p in self.positions.all()])
         return f"Sales for the amount of ${self.total_price}, ventas: {positions_list}"
 
-        
-
-    
     def get_absolute_url(self):
         return reverse('sales:detail', kwargs={'pk':self.pk})
     
+    #? to override transaction_id, created
+    # Al parecer esta función se resuelve despues de salvar el formulario
+    # save(): convension, guardar instancias de modelos en la base de datos.
+    #! podría ser solo save(self) 
+    # *args y **Kwargs no los ocupa por el momento...
+    # *'flexible' llamada x n# y tipo de argumentos...
     def save(self,*args,**kwargs):
+
+        #* 'despues de llenar' si 'transaction_id' fue dejado en blanco:
         if self.transaction_id == '':
+
+            #* se genera un código en utils y se establece en el campo de 'transaction_id'
             self.transaction_id = generate_code()
+
+        #! xq 'created' se debe corroborar como None, creo None es blank :
         if self.created is None:
+            
+            #* (then we'll refere to self) se genera un código en utils y se establece en el campo de 'transaction_id'
             self.created = timezone.now()
+
+        #? super(): llama a la tabla fuera de esta función, tabla superior fuera d self función
+        # super(): convension, llama un método de superclase del objeto actual
+        #! podría ser solo save()
+        # *self ya esta definido dentro de la función y ya lo toma al inicio al ser llamada
+        # *args y **Kwargs no los ocupa por el momento...
+        # * mas 'flexible' llamada x n# y tipo de argumentos...
         return super().save(*args,**kwargs)
         
+    #* CUSTOM METHOD   
     def get_positions(self):
+
+        #? columna/instancia posiciones, como es un manytomany
+        #? devuelve un QUERY SET con '.all()'
+        #? lista de todas las referencias que tiene cada Sale
         return self.positions.all()
 
 
 class CSV(models.Model):
     
+    #upload_to='csvs': inside the media csvs we´ve another folder called csvs where to keep csvs
     file_name = models.FileField(upload_to='csvs')
+
     activated = models.BooleanField(default=False)
+
+    """
+    ? auto_now_add=True:
+    registrar: fecha, hora, creación objeto x primera vez, no se actualiza
+    ? auto_now=True:
+    registrar: fecha, hora, actualiza cada vez q guarda objeto
+    abro, no edito, guardo: llama al método save() que actualiza todos los campos incluyendo 'auto_now'
+    * auto_now_add=True, auto_now=True: no aparece en el formulario de admin, interno automático
+    * blank=true: si aparece en el formulario de admin, establecer manualmente """
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    #? STR METHOD (método es una función que se define dentro de una clase)
     def __str__(self):
         return str(self.file_name)

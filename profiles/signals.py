@@ -9,7 +9,8 @@
 ? usuarios y perfiles tienen una referencia directa?
 
 # signals:
-- la señal se creó en el receptor
+- en este caso la señal tiene referencias de: 
+* app (receptora(profiles))/ modelo (receptor(Profile))/ columna(receptora(user))
 - sistema de comunicacion entre apps
 - forma en Django de detectar eventos en el proyecto
 ? app emisora "User" > app receptora "Profile"
@@ -24,14 +25,36 @@ from django.dispatch import receiver
 
 from .models import *
 
-# decorador (receiver) la señal será despues de guardar (post_save) y el emisor
+""" 
+# la señal será despues de guardar 'post_save' y el emisor es 'User'
+
+# @receiver: registrar la función 'post_save_create_profile' como manejador del signal 'post_save' para el modelo 'Profile'
+
+# La def 'post_save_create_profile' decorada con @receiver: se ejecuta cada vez q se envíe el signal 'pre_save' para una instancia de MyModel
+
+# y recibirá los argumentos específicos del signal en los parámetros de la función. 
+
+#todo: para hacer pruebas puedo hacer un modelo:
+# todo Creo que no necesita un campo en especial.
+# todo simplemente con importar los signal existentes
+# todo investigar los parámetros que manejan
+# todo ver los datos que arrojan
+# todo preguntar a chat x datos que no reconozca
+# todo y ya creo
+#! las señales parecen ser como código predefinido para intercepta la comunicación interna entre apps/models que entrega info y correspondiente a esa info se puede configurar un todo o accion """
 @receiver(post_save, sender=User)
+
 # función "despues de salvar crea perfil": emisor, instancia, creado?, kwargs.
 # Kwargs: keyword arguments, pero se puede usar otro nombre, y pasa un diccionario a una función
 def post_save_create_profile(sender, instance, created, **Kwargs):
 
-    print(sender) # entrega un elemento del módulo: django.contrib.auth.models.User
-    print(instance) # string o dato
+    # entrega un elemento del módulo: django.contrib.auth.models.User
+    # sender: especifica clase del modelo q está guardando
+    print(sender)
+
+    # string o dato
+    # instance: especifica instancia específica del modelo q está guardando
+    print(instance)
 
     # es un booleano
     # true: 'instancia' de emisor es creada

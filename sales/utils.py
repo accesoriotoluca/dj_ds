@@ -1,15 +1,37 @@
-from io import BytesIO
-import uuid, base64
 
+#! where we going to store all the helper functions
+
+# frameworks, bibliotecas, librerías importadas con un seudónimo
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# módulos importados de rameworks, bibliotecas, librerías
+from io import BytesIO
+
+# módulos importados de python
+#* módulo es un archivo q contiene definiciones, declaraciones de variables, funciones y clases
+import uuid, base64
+
+# modelos importados de otras carpetas
 from customers.models import *
 from profiles.models import *
 
-
+#? CUSTOM METHOD/DEF
+#? Se llamará de: Modelo Sale > def save()
 def generate_code():
 
+    """
+    # set the 'code' var, call 'uuid.uuid4()'
+    ! c1 = UUid.Uuid4()
+    * print(c1): d7fee3f6-7df6-4f5f-982b-baea54597edc
+
+    # grap in a str, to perform the replace
+    # replace dashes w/ empy space
+    # limit to 12 characters [:12]
+    # ! [:12] c establecio en: param(max_length=12)/instance(transaction_id)/model(Sale)
+    ! c2 = str(c1).replace('-',)[:12]
+    * print(c2): d7fee3f67df6 
+    # por ultimo se pasa a MAYÚSCULAS x estética"""
     code = str(uuid.uuid4()).replace('-','').upper()[:12]
     return code
 

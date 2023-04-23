@@ -3,6 +3,8 @@ from django.db import models
 class Product(models.Model):
     
     name = models.CharField(max_length=120)
+
+    #upload_to='products': inside the media products we´ve another folder called products where to keep images
     image = models.ImageField(upload_to='products',default='no_picture.png')
 
     # help_text aparece debajo del formulario

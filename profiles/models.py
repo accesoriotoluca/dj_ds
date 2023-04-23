@@ -13,6 +13,7 @@ class Profile(models.Model):
     # default: aparace dentro del formulario
     bio = models.TextField(default="no bio...")
     
+    #upload_to='avatars': inside the media avatars we´ve another folder called avatars where to keep images
     avatar = models.ImageField(upload_to='avatars',default='no_picture.png')
 
     """
