@@ -18,11 +18,12 @@
 ? receptor: realiza una acción en base a la información recibida. (Profile será creado para ese usuario)
 
 """
-
+# modulos y decorators de signal y librerias importados
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 
+#modelos importados de esta app
 from .models import *
 
 """ 
@@ -30,9 +31,9 @@ from .models import *
 
 # @receiver: registrar la función 'post_save_create_profile' como manejador del signal 'post_save' para el modelo 'Profile'
 
-# La def 'post_save_create_profile' decorada con @receiver: se ejecuta cada vez q se envíe el signal 'pre_save' para una instancia de MyModel
+# La def 'post_save_create_profile' decorada con @receiver: se ejecuta cada vez q se envíe el signal 'post_save' para una instancia del modelo 'Profile'
 
-# y recibirá los argumentos específicos del signal en los parámetros de la función. 
+# y recibirá los argumentos específicos del signal en los paráms de la función. 
 
 #todo: para hacer pruebas puedo hacer un modelo:
 # todo Creo que no necesita un campo en especial.

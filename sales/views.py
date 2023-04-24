@@ -1,15 +1,22 @@
+# modulos importados de frameworks, librerias, etc
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render
 
+# frameworks, librerias,etc. importados con seudónimo
 import pandas as pd
 import locale
 
+# clase que cambia el idioma
 locale.setlocale(locale.LC_ALL, 'es_ES.utf8')
 
+# modelos, formularios y utiles importados de esta app
 from .models import *
 from .forms import *
 from .utils import *
 
+#! utilizo una vista basada en una función
+#! por que agregará mucha lógica en esta vista
+#! en su opinion las vistas basadas en funciones no son un cagadero como las vistas basadas en clase, y que chinguen su madre las vistas basadas en clase, asi lo dijo él...
 def home_view(request):
 
     sales_df = None

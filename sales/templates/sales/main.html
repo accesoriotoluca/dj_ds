@@ -1,15 +1,43 @@
 {% extends 'base.html' %}
 
-{% block title %} sales list {% endblock title %}
+
+{% block title %} 
+
+    sales list 
+
+{% endblock title %}
+
 
 {% block content %}
 
-    sales list: <br>
+    <h1>Sales list: </h1>
+    <br>
+    <br>
 
-    {% for obj in object_list %}
+    <!-- 
+    * object_list:
+    conveniencia para acceder a la lista de objetos del modelo especificado en la vista al templete, si no se quiere usar se puede definir:
+    * context_object_name = 'qs' (en la vista) -->
+    {% for i in object_list %}
 
         <div class="card mb-3">
-            <a href="{{obj.get_absolute_url}}" class="card-body">{{obj.transaction_id}}</a>
+
+            <a href="{{i.get_absolute_url}}" class="card-body">
+
+                <p class=""><small>id: {{i.transaction_id}}</small></p>
+
+                {% for n in i.positions.all %}
+
+                    Producto: {{n.product.name}} / Precio: {{n.product.price}} x {{n.quantity}} pzas / Subtotal: ${{n.price}}
+                    <br>
+
+                {% endfor %}
+                <br>
+
+                <h3 class="">Total: {{i.total_price}}</h3>
+
+            </a>
+
         </div>
 
     {% endfor %}

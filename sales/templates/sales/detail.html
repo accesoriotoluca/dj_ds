@@ -9,8 +9,16 @@
 
 {% block content %}
 
-    {{object.pk}}
+    <p class=""><small>id: {{object.transaction_id}}</small></p>
+
+    {% for n in object.positions.all %}
+
+        Producto: {{object.product.name}} / Precio: {{object.product.price}} x {{object.quantity}} pzas / Subtotal: ${{object.price}}
+        <br>
+
+    {% endfor %}
     <br>
-    {{object.transaction_id}}
+
+    <h3 class="">Total: {{object.total_price}}</h3>
     
 {% endblock content %}

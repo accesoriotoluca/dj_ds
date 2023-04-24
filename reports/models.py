@@ -5,7 +5,7 @@ class Report(models.Model):
     
     name = models.CharField(max_length=120)
 
-    #upload_to='reports': inside the media reports we´ve another folder called reports where to keep reports
+    #upload_to='reports': inside the media reports we´ve another folder called reports where to keep charts base on date from date to
     image = models.ImageField(upload_to='reports',blank=True)
 
     remarks = models.TextField()

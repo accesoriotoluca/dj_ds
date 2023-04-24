@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
-# override 'ready' method (anular)
+#! override 'ready' method (anular)
 # ProfilesConfig: clase q organiza partes del proyecto en módulos
 # ProfilesConfig es modificable, puedo poner señalPerfiles_<accion de la señal>, etc.
 class ProfilesConfig(AppConfig):
