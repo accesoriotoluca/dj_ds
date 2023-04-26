@@ -1,13 +1,4 @@
 """ 
-* EJEMPLO
-! EJEMPLO
-? EJEMPLO
-TODO: EJEMPLO
-
-? VIRTUAL ENV:
-virtualenv venv
-.\venv\Scripts\activate
-
 ? PIP
 py.exe -m pip install --upgrade pip
 pip install django
@@ -18,8 +9,6 @@ pip install pillow
 pip install seaborn
 pip install xhtml2pdf
 pip install crispy-bootstrap4
-
-pip freeze > requirements.txt
 
 ? PROJECT
 django-admin startproject reports_proj .
