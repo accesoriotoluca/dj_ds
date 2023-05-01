@@ -16,7 +16,7 @@ from .utils import *
 
 #! utilizo una vista basada en una función
 #! por que agregará mucha lógica en esta vista
-#! en su opinion las vistas basadas en funciones no son un cagadero como las vistas basadas en clase, y que chinguen su madre las vistas basadas en clase, asi lo dijo él...
+#! en su opinion las vistas basadas en funciones son mas legibles que las basadas en clases
 def home_view(request):
 
     sales_df = None
@@ -83,6 +83,20 @@ def home_view(request):
         else:
 
             print('no data')
+
+    #! si es POST ↑
+    #! si se recibe una solicitud POST para una vista determinada
+    #! significa que se está enviando información al servidor para su procesamiento o actualización
+    #! Por lo tanto, en este caso, la vista debe procesar los datos enviados en la solicitud POST y actualizar la base de datos según sea necesario.
+
+    #* si es GET:
+
+    # cuando se recibe una solicitud GET para una vista determinada
+    # se espera que el servidor devuelva una respuesta que incluya una representación HTML de la información solicitada
+
+    # si la vista es accesible a través de una URL determinada
+    # y se hace una solicitud GET
+    # Django responderá con la plantilla correspondiente a esa vista
 
     context ={
         'form':form,
