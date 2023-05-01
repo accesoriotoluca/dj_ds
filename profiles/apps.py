@@ -1,8 +1,8 @@
 from django.apps import AppConfig
 
 #! override 'ready' method (anular)
-# ProfilesConfig: clase q organiza partes del proyecto en módulos
-# ProfilesConfig es modificable, puedo poner señalPerfiles_<accion de la señal>, etc.
+# clase 'ProfilesConfig': organiza partes del proyecto en módulos
+# clase 'ProfilesConfig': puede terner otro nombre
 class ProfilesConfig(AppConfig):
 
     # para que Django sepa cómo llamar al módulo en el proyecto

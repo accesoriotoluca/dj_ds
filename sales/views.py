@@ -16,7 +16,11 @@ from .utils import *
 
 #! utilizo una vista basada en una función
 #! por que agregará mucha lógica en esta vista
+<<<<<<< HEAD
 #! en su opinion las vistas basadas en funciones son mas legibles que las basadas en clases
+=======
+#! en su opinion las vistas basadas en funciones... no son un cagadero como las vistas basadas en clase, y que chinguen su madre las vistas basadas en clase, asi lo dijo él...
+>>>>>>> 83fc8722672ff1801b48cfa18d9bcf7eb25c4cdf
 def home_view(request):
 
     sales_df = None
