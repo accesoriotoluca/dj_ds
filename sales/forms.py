@@ -6,6 +6,18 @@ CHART_CHOICES = (
     ('#3','Line chart'),
 )
 
+# form.Form save add update objects to the database
+# form base in the model
+# create a model that isnt related to any of other models
+
+"""
+? utilizando el formulario estándar de Django. 
+Esto significa que cada campo debe ser especificado manualmente, 
+y se debe implementar la lógica de validación y almacenamiento de datos por separado. 
+* Este enfoque es útil cuando se desea más control sobre la apariencia 
+* y el comportamiento del formulario, 
+*y cuando no se requiere la integración completa con la base de datos."""
+
 class SalesSearchForm(forms.Form):
     
     date_from = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))

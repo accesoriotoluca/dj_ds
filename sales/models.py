@@ -66,7 +66,25 @@ class Position(models.Model):
         # * mas 'flexible' llamada x n# y tipo de argumentos...
         return super().save(*args, **kwargs)
     
+    """
+    cant perform a direct forward relation, 
+    posiciones no tiene relacion con sale
+    pero en la clase sale existe position con manytomany
+    se puede realizar reverse relationship
+    en este proyecto cada posición pertenecerá a un solo objeto sale"""
     def get_sales_id(self):
+
+        """
+        esta es una relacion inversa, 
+        se tiene que especificar la case 'siguiente'
+        este parámetro podría ser '.all()' y podría ser con 'related name'
+        * el nombre de la referencia inversa generada por Django
+        * es el nombre en minúsculas del modelo seguido de "_set",
+        * lo que en este caso daría como resultado "sale_set"
+        * para la relación ManyToManyField entre Sale y Position.
+        ! La referencia inversa es una propiedad interna de Django 
+        ! y no se refleja como una columna en la tabla de la base de datos,
+        ! sino que es una 'propiedad del modelo' que se utiliza para acceder a los objetos relacionados."""
         sale_obj = self.sale_set.first()
         return sale_obj.id
 
@@ -75,7 +93,7 @@ class Position(models.Model):
         return f"id: {self.id}, product: {self.product.name}, quantity: {self.quantity}"
 
 
-#! TABLA SALES >>>
+#! TABLA Sale >>>
 # A sale consist in many positions
 # Este creo sería como Total del subtotal
 class Sale(models.Model):
@@ -151,7 +169,31 @@ class Sale(models.Model):
         positions_list = ", ".join([f"product: {p.product.name} price: {p.product.price} quantity: {p.quantity}" for p in self.positions.all()])
         return f"Sales for the amount of ${self.total_price}, ventas: {positions_list}"
 
+    """
+    *método de instancia
+     proporciona URL absoluta d1 instancia particular de un modelo
+     'URL absoluta'= 'URL completa' incluye "esquema, nombre de dominio, puerto, ruta"
+    ! este methodo se llama del templete 'lista'
+    ! tanto la vista como el templete y este metodo:
+    ! iteran por todas las instancias creando una lista de urls"""
     def get_absolute_url(self):
+        
+        """
+        # crear 'URL inversa' a partir de vista 'detail' dentro de app 'sales'
+        ! La URL se construye: 
+        * pasando un diccionario de argumentos de palabras clave 
+        * en el que la clave es 'pk' (clave principal)
+        * y el valor es el valor de la clave principal de la instancia actual del modelo.
+        # Esto asegura que la URL generada sea única para cada instancia del modelo.
+        ? reverse: busca el patrón de URL ('sales:detail')
+        ? en el archivo urls.py de app sales, 
+        ? y utiliza el nombre de la vista definido 
+        ? en este patrón de URL para construir la URL
+        ! En Django al definir un modelo
+        ! se crea automáticamente un campo pk/id
+        ! pk/id es un número entero qc asigna automáticamente a cada instancia se guarda en db
+        ! 'pk' en el diccionario corresponde a la variable en la URL del archivo urls.py
+        ! y el parámetro q espera la vista con nombre pk"""
         return reverse('sales:detail', kwargs={'pk':self.pk})
     
     #? to override transaction_id, created

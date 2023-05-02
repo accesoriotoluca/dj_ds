@@ -21,8 +21,11 @@
     {% for i in object_list %}
 
         <div class="card mb-3">
-
-            <a href="{{i.get_absolute_url}}" class="card-body">
+            
+            <!-- se pudo haber definido como "{.% url 'sales:detail' i.pk %}
+                ! pero si se cambia la ruta o el pk se necesitaría cambiar en todas las instancias
+                * y get_absolut_url funciona solamente para el modelo especifico y aunque se modifique la url se mantiene el metodo" -->
+            <a href="{.{ i.get_absolut_url }}" class="card-body">
 
                 <p class=""><small>id: {{i.transaction_id}}</small></p>
 

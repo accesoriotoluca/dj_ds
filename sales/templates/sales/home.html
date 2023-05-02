@@ -30,28 +30,33 @@
     </div>
 
     <form action="" method="POST">
+
         {% csrf_token %}
-        {{form|crispy}}
-        <button type="submit" class="btn btn-primary mt-3">search</button>
+
+        {{form}}
+
+        <button type="submit" class="m-3 btn btn-primary">search</button>
+
     </form>
     <br>
 
     {% if sales_df %}
 
-        sales df
-        {{sales_df|safe}}
-        <br>
-        position df
-        {{positions_df|safe}}
-        <br>
-        merge df
-        {{merge_df|safe}}
-        <br>
-        grouped by df
-        {{df|safe}}
-        <br>
-        chart
-        <img src="data:image/png;base64,{{chart|safe}}" id="img">
+        <h3>Sales DF:</h3>
+        <div class="mb-5">{{sales_df|safe}}</div> <!-- lista de sales de fecha especificada -->
+        
+        <h3>Position DF:</h3>
+        <div class="mb-5">{{positions_df|safe}}</div> <!-- lista de positions de fecha especificada -->
+        
+        <h3>Merge DF:</h3>
+        <div class="mb-5">{{merge_df|safe}}</div>
+        
+        <h3>Grouped by DF:</h3>
+        <div class="mb-5">{{df|safe}}</div>
+        
+        <h2 class="mb-3">Chart:</h2>
+        <div><img src="data:image/png;base64,{{chart|safe}}" id="img"></div>
+
         <button class="btn btn-success">report</button>
 
     {% else %}
@@ -59,7 +64,7 @@
         <h3>no data</h3>
 
     {% endif %}
-
-    <button class="btn btn-primary not_visible mt-3" id="report-btn" data-bs-toggle="modal" data-bs-target="#reportModal">add report</button>
+    
+    <button class="btn btn-primary not_visible" id="report-btn" data-bs-toggle="modal" data-bs-target="#reportModal">add report</button>
     
 {% endblock content %}

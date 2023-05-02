@@ -26,6 +26,22 @@ def home_view(request):
     chart = None
     
     form = SalesSearchForm(request.POST or None)
+    #* se está 'tratando' de crear una instancia del formulario mediante una petición POST.
+    """
+    Cuando envía formulario a través de POST,
+    los datos se incluyen en 'carga útil' de petición (POST)
+    y se pueden acceder: en el objeto 'request.POST'
+
+    ! La expresión 'request.POST or None': 
+    * permitir que el formulario se maneje correctamente
+    * en caso de que la petición no incluya 'datos de formulario'
+    ? Si la petición POST incluye datos de formulario:
+    ? request.POST contendrá esos datos y se utilizarán. 
+    ! Si la petición no incluye 'datos de formulario' (como en una petición GET), 
+    ! request.POST será None y se creará una instancia vacía del formulario.
+    * De esta manera, al pasar request.POST or None como argumento al constructor de SalesSearchForm, 
+    * se garantiza que el formulario se inicializará correctamente en ambas situaciones, 
+    * es decir, tanto si la petición incluye datos de formulario como si no."""
 
     if request.method =='POST':
 
@@ -33,15 +49,14 @@ def home_view(request):
         date_to = request.POST.get('date_to')
         chart_type = request.POST.get('chart_type')
 
-        sale_qs = Sale.objects.filter(
-            created__date__lte=date_to,
-            created__date__gte=date_from
-        )
+        sale_qs = Sale.objects.filter(created__date__lte=date_to, created__date__gte=date_from)
 
         if len(sale_qs) > 0:
 
+            # dataframe de Lista de datos de la fecha especificada en el formulario
             sales_df = pd.DataFrame(sale_qs.values())
 
+            # en esta parte se establece/formatean datos de sales_df (sales_qs.valores)
             sales_df['customer_id'] = sales_df['customer_id'].apply(get_customer_from_id)
             sales_df['salesman_id'] = sales_df['salesman_id'].apply(get_salesman_from_id)
             sales_df['created'] = sales_df['created'].apply(lambda x:x.strftime('%d / %b / %y - %A')).str.title()
@@ -57,10 +72,25 @@ def home_view(request):
                 ,axis=1,inplace=True
             )
 
+            """
+            ! positions_df = pd.DataFrame(qs.get_positions())
+            para iterar por cada posicion de la venta
+            *no se puede con en el 'metodo' get positions, 
+            *se debe crear un for loop """
             positions_data = []
 
+            #se esta iterando de sales_qs este es un query list, los otros son dataframes.
+            #cada sale puede iterar dentro del metodo get_positions del modelo sale
             for sale in sale_qs:
+
+                #* pos = position, esta llamando de cada sale a cada position a cada producto: 
                 for pos in sale.get_positions():
+
+                    # esta estableciendo un diccionario de cada atributo x nombre y objeto
+                    """
+                        * no es necesario referenciar la tabla positions es que.
+                        * get_sales_id es de esa tabla y estamos en la tabla sales. 
+                        * pero como sales tiene un foreignkey con positions se puede sin hacer referencia, entra directo. """
                     obj = {
                         'sales_id':pos.get_sales_id(),
                         'positions_id':pos.id,
@@ -68,21 +98,24 @@ def home_view(request):
                         'quantity':pos.quantity,
                         'price':pos.price,
                     }
+
+                    # itera por cada objeto obtenido en el diccionario y lo agrega a la variable
                     positions_data.append(obj)
 
+            # dataframe de lista de datos obtenidos x la iteracion de posiciones y productos en diccionario
             positions_df = pd.DataFrame(positions_data)
+
             merge_df = pd.merge(sales_df,positions_df,on='sales_id')
             df = merge_df.groupby('transaction',as_index=False)['price'].agg('sum')
             chart = get_chart(chart_type,df,labels=df['transaction'].values)
 
-            sales_df = sales_df.to_html()
-            positions_df = positions_df.to_html()
+            # para que lo procese como html
+            sales_df = sales_df.to_html() #lista de sales
+            positions_df = positions_df.to_html() #lista de posiciones
             merge_df = merge_df.to_html()
             df = df.to_html()
 
-        else:
-
-            print('no data')
+        else: print('no data')
 
     #! si es POST ↑
     #! si se recibe una solicitud POST para una vista determinada
@@ -99,9 +132,9 @@ def home_view(request):
     # Django responderá con la plantilla correspondiente a esa vista
 
     context ={
-        'form':form,
-        'sales_df':sales_df,
-        'positions_df':positions_df,
+        'form':form, # formularios fechas y chart tipe
+        'sales_df':sales_df, # lista de sales
+        'positions_df':positions_df, # lista de positions
         'merge_df':merge_df,
         'df':df,
         'chart':chart
@@ -116,6 +149,12 @@ class SaleListView(ListView):
     template_name = 'sales/main.html'
 
 
+"""
+la vista espera un parámetro llamado pk de forma predeterminada.
+! sin necesidad de especificarlo en el parametro de la funcion
+clase DetailView diseñada manejar detalles de instancia de modelo
+El pk se utiliza para identificar la instancia específica,
+por lo que la vista espera un valor pk """
 class SaleDetailView(DetailView):
     
     model = Sale
