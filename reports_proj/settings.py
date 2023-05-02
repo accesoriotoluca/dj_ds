@@ -132,6 +132,7 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
+    #por que no lo encontraba en app sales/static/sales/home.js
     BASE_DIR / 'sales' / 'static'
 ]
 

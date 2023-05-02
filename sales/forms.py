@@ -6,6 +6,11 @@ CHART_CHOICES = (
     ('#3','Line chart'),
 )
 
+RESULT_CHOICES = (
+    ('#1','transaction'),
+    ('#2','sales date'),
+)
+
 # form.Form save add update objects to the database
 # form base in the model
 # create a model that isnt related to any of other models
@@ -23,3 +28,4 @@ class SalesSearchForm(forms.Form):
     date_from = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
     date_to = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
     chart_type = forms.ChoiceField(choices=CHART_CHOICES)
+    results_by = forms.ChoiceField(choices=RESULT_CHOICES)

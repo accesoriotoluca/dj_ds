@@ -14,6 +14,9 @@ from .models import *
 from .forms import *
 from .utils import *
 
+#modelos, formularios y utiles de otras apps
+from reports.forms import *
+
 #! utilizo una vista basada en una función
 #! por que agregará mucha lógica en esta vista
 #! en su opinion las vistas basadas en funciones son mas legibles que las basadas en clases
@@ -24,8 +27,10 @@ def home_view(request):
     merge_df = None
     df = None
     chart = None
-    
-    form = SalesSearchForm(request.POST or None)
+    no_data = None
+
+    report_form = ReportForm()
+    search_form = SalesSearchForm(request.POST or None)
     #* se está 'tratando' de crear una instancia del formulario mediante una petición POST.
     """
     Cuando envía formulario a través de POST,
@@ -48,6 +53,7 @@ def home_view(request):
         date_from = request.POST.get('date_from')
         date_to = request.POST.get('date_to')
         chart_type = request.POST.get('chart_type')
+        results_by = request.POST.get('results_by')
 
         sale_qs = Sale.objects.filter(created__date__lte=date_to, created__date__gte=date_from)
 
@@ -128,8 +134,8 @@ def home_view(request):
             "price": suma total d precios para las filas en merge_df con el mismo "transaction_id" """
             df = merge_df.groupby('transaction_id',as_index=False)['price'].agg('sum')
 
-            
-            chart = get_chart(chart_type,df,labels=df['transaction_id'].values)
+            #TODO GPT
+            chart = get_chart(chart_type,sales_df,results_by)
 
             # para que lo procese como html
             sales_df = sales_df.to_html() #lista de sales
@@ -137,7 +143,7 @@ def home_view(request):
             merge_df = merge_df.to_html()
             df = df.to_html()
 
-        else: print('no data')
+        else: no_data = 'No data is available in this date range'
 
     #! si es POST ↑
     #! si se recibe una solicitud POST para una vista determinada
@@ -154,12 +160,14 @@ def home_view(request):
     # Django responderá con la plantilla correspondiente a esa vista
 
     context ={
-        'form':form, # formularios fechas y chart tipe
+        'search_form':search_form, # formularios fechas y chart tipe
         'sales_df':sales_df, # lista de sales
         'positions_df':positions_df, # lista de positions
         'merge_df':merge_df,
         'df':df,
-        'chart':chart
+        'chart':chart,
+        'report_form':report_form,
+        'no_data':no_data
     }
 
     return render(request,'sales/home.html',context)

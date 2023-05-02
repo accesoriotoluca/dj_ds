@@ -23,6 +23,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('sales.urls', namespace='sales')),
+    path('reports/', include('reports.urls', namespace='reports')),
 ]
 
 #importan media y static
