@@ -6,15 +6,23 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # módulos importados de rameworks, bibliotecas, librerías
+"""
+El módulo io proporciona clases base para trabajar con flujos de entrada/salida. La clase BytesIO del módulo io es una clase de flujo de bytes que se utiliza para crear un objeto de flujo de memoria de bytes. Este objeto se comporta como un archivo en memoria, permitiendo la lectura y escritura de datos binarios en memoria utilizando la misma interfaz que un objeto de archivo normal.
+
+El objeto BytesIO se inicializa sin argumentos y se puede utilizar para almacenar datos binarios en memoria. La clase proporciona métodos para leer y escribir datos binarios en el objeto de flujo, y para obtener la posición actual dentro del flujo. También se pueden utilizar métodos para obtener el contenido completo del objeto de flujo o para obtener una vista de memoria en los datos contenidos en el objeto.
+
+En resumen, el módulo io con su clase BytesIO permite la manipulación de datos binarios en memoria, lo que puede ser útil para realizar operaciones de procesamiento de datos en memoria sin la necesidad de acceder a archivos en disco."""
 from io import BytesIO
 
 # módulos importados de python
 #* módulo es un archivo q contiene definiciones, declaraciones de variables, funciones y clases
+#* base64 proporciona funcionalidad para la codificación y decodificación de datos binarios en formato de texto ASCII. Este módulo se utiliza comúnmente en aplicaciones web y de red para transferir datos binarios, como imágenes, entre sistemas que pueden no ser compatibles con la transferencia de datos binarios directamente. La codificación Base64 es una forma de representar datos binarios utilizando caracteres ASCII seguros para su transferencia a través de redes que solo admiten caracteres ASCII.
 import uuid, base64
 
 # modelos importados de otras carpetas
 from customers.models import *
 from profiles.models import *
+
 
 #? CUSTOM METHOD/DEF
 #? Se llamará de: Modelo Sale > def save()
@@ -36,15 +44,23 @@ def generate_code():
     return code
 
 
+#* val =sales_df['customer_id'] que es el id
 def get_salesman_from_id(val):
 
+    # variable = modelo objetos obtener donde columna id sea igual a val que ya dijimos 
     salesman = Profile.objects.get(id=val)
+
+    # obtiene variable/ahora objeto. instancia campo usuario. de foreignkey con tabla user de django. 'username'
     return salesman.user.username
 
 
+#* val =sales_df['customer_id'] que es el id
 def get_customer_from_id(val):
 
+    # variable = modelo objetos obtener donde columna id sea igual a val que ya dijimos 
     customer = Customer.objects.get(id=val)
+
+    # obtiene variable/ahora objeto. instancia campo customer. y ya por que no tiene nada mas
     return customer
 
 
@@ -63,17 +79,31 @@ def get_graph():
 def get_chart(chart_type,data,**kwargs):
     
     plt.switch_backend('AGG')
+
     fig = plt.figure(figsize=(10,4))
+
+
     if chart_type == '#1':
-        #plt.bar(data['transaction'],data['price'])
-        sns.barplot(x='transaction',y='price',data=data)
+
+        #plt.bar(data['transaction_id'],data['price'])
+        sns.barplot(x='transaction_id',y='price',data=data)
+
     elif chart_type =='#2':
+
         labels = kwargs.get('labels')
-        plt.pie(data['transaction'],data['price'], labels=labels)
+        plt.pie(data=data,x='price', labels=labels)
+
     elif chart_type =='#3':
-        plt.plot(data['transaction'],data['price'],color='green',marker='o',linestyle='dashed')
+
+        plt.plot(data['transaction_id'],data['price'],color='green',marker='o',linestyle='dashed')
+
     else:
+
         print('ups...failed to identify the chart type')
+
+
     plt.tight_layout()
+    
     chart = get_graph()
+
     return chart

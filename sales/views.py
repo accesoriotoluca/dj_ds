@@ -57,15 +57,20 @@ def home_view(request):
             sales_df = pd.DataFrame(sale_qs.values())
 
             # en esta parte se establece/formatean datos de sales_df (sales_qs.valores)
+            #* apply() se usa para aplicar una función a cada valor en una columna de un DataFrame
+            #* sales_df['customer_id'] envía el id a .apply(get_etc)
             sales_df['customer_id'] = sales_df['customer_id'].apply(get_customer_from_id)
             sales_df['salesman_id'] = sales_df['salesman_id'].apply(get_salesman_from_id)
-            sales_df['created'] = sales_df['created'].apply(lambda x:x.strftime('%d / %b / %y - %A')).str.title()
-            sales_df['updated'] = sales_df['updated'].apply(lambda x:x.strftime('%d / %b / %y - %A')).str.title()
 
+            #* sales_df['created'] = sales_df['created'].apply(lambda x: x.strftime('%d / %b / %y - %A')).str.title()
+            sales_df['created'] = sales_df['created'].apply(lambda x: x.strftime('%Y-%m-%d'))
+
+            # axis=1 indica qc quiere cambiar el nombre de las columnas del DataFrame.
+            # Si se quisiera cambiar el nombre de las filas, se usaría axis=0
+            #* inplace=True modifica directamente el DataFrame existente.
+            #* Si inplace=False (x defecto) devuelve un nuevo DataFrame, sin modificar el original.
             sales_df.rename({
-                        'id':'sales_id',
-                        'transaction_id':'transaction',
-                        'total_price':'total',
+                        'id': 'sales_id',
                         'customer_id':'customer',
                         'salesman_id':'salesman',
                     }
@@ -105,9 +110,26 @@ def home_view(request):
             # dataframe de lista de datos obtenidos x la iteracion de posiciones y productos en diccionario
             positions_df = pd.DataFrame(positions_data)
 
+            # mergea 2 dataframes por 1 mismo id y se chingo, nose?????, 'aqui me la aplicaron :('
             merge_df = pd.merge(sales_df,positions_df,on='sales_id')
-            df = merge_df.groupby('transaction',as_index=False)['price'].agg('sum')
-            chart = get_chart(chart_type,df,labels=df['transaction'].values)
+
+            """
+            * agrupan merge_df x la columna "transaction_id"
+            * as_index=False para que la columna "transaction_id"
+            * no sea el índice del nuevo DataFrame, si no que sea id 0,1,2,3,4,etc.
+
+            ?luego del resultante se escoge 'price'
+            agg() a la columna "price" y se usa la función sum()
+            para sumar todos los valores en la columna "price"
+            para cada grupo de transacciones.
+            se almacena en df.
+            *tendrá 2 columnas: "transaction_id", "price":
+            "transaction_id": identificador de la transacción
+            "price": suma total d precios para las filas en merge_df con el mismo "transaction_id" """
+            df = merge_df.groupby('transaction_id',as_index=False)['price'].agg('sum')
+
+            
+            chart = get_chart(chart_type,df,labels=df['transaction_id'].values)
 
             # para que lo procese como html
             sales_df = sales_df.to_html() #lista de sales
