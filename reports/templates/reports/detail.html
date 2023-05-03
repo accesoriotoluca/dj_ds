@@ -2,15 +2,25 @@
 
 {% block title %}
 
-    detail {{object.name}}
+    {{object.name}}
 
 {% endblock title %}
 
 
 {% block content %}
 
-    <p class=""><small>created: {{object.created}}</small></p>
-    <h3 class="">Name: {{object.name}}</h3>
-    <h3 class="">Author: {{object.author}}</h3>
-    
+    {% if object.image %}
+
+        <img src="{{object.image.url}}" class="img-fluid" alt="{{object.name}}">
+
+    {% endif %}
+
+    <br>
+
+    <h3>Remarks</h3>
+    <p> {{object.remarks}} </p>
+    <hr>
+    <p>Author: <b> {{object.author.user.username}} </b> </p>
+    <p>Created: <b> {{object.created}} </b> </p>
+
 {% endblock content %}

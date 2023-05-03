@@ -133,7 +133,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
     #por que no lo encontraba en app sales/static/sales/home.js
-    BASE_DIR / 'sales' / 'static'
+    BASE_DIR / 'sales' / 'static',
+    BASE_DIR / 'reports' / 'static'
 ]
 
 # parte de la ruta de la imagen en la página:

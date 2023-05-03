@@ -5,8 +5,12 @@ app_name = 'reports'
 
 urlpatterns = [
 
+    path('from_file/', UploadTemplateView.as_view(), name='from-file'),
+    path('upload/', csv_upload_view, name='upload'),
     path('save/', create_report_view, name='create-report'),
 
-    path('main/', ReportListView.as_view(), name='list'),
-    path('main/<pk>/', ReportDetailView.as_view(), name='detail'),
+    path('', ReportListView.as_view(), name='main'),
+    path('<pk>/', ReportDetailView.as_view(), name='detail'),
+    path('<pk>/pdf/', render_pdf_view, name='pdf'),
+
 ]

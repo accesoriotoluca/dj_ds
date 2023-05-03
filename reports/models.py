@@ -34,3 +34,10 @@ class Report(models.Model):
 
     def __str__(self):
         return str(self.name)
+    
+    #TODO GPT
+    # solo se que ordena en templete lista de mas reciente al mas antiguo
+    # pero imagino que depende de la instancias que se establezca
+    # y el menos imagino que es de menor a mayor y por defecto esta en +
+    class Meta:
+        ordering = ('-created',)
