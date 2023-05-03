@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block title %} 
+
+    Report list 
+
+{% endblock title %}
+
+
+{% block content %}
+
+    <h1>Report list: </h1>
+    <br>
+    <br>
+
+    {% for i in object_list %}
+
+        <div class="card mb-3">
+
+            <a href="{{ i.get_absolut_url }}" class="card-body">
+
+                <p class=""><small>created at: {{i.created}}</small></p>
+                <h3 class="">Name: {{i.name}}</h3>
+                <h3 class="">Author: {{i.author}}</h3>
+
+            </a>
+
+        </div>
+
+    {% endfor %}
+    
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+    detail {{object.name}}
+
+{% endblock title %}
+
+
+{% block content %}
+
+    <p class=""><small>created: {{object.created}}</small></p>
+    <h3 class="">Name: {{object.name}}</h3>
+    <h3 class="">Author: {{object.author}}</h3>
+    
+{% endblock content %}
