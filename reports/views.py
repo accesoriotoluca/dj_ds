@@ -10,11 +10,16 @@ from .utils import *
 from .forms import *
 
 from sales.models import *
+from products.models import *
+from customers.models import *
 
 from django.conf import settings
 from django.http import HttpResponse
 from django.template.loader import get_template
+from datetime import datetime
 from xhtml2pdf import pisa
+
+from django.utils.dateparse import parse_date
 import csv
 
 def create_report_view(request: HttpRequest):
@@ -84,9 +89,30 @@ def csv_upload_view(request):
         with open(obj.file_name.path,'r') as f:
 
             reader = csv.reader(f)
+            reader.__next__()
 
             for row in reader:
 
-                print(row, type(row))
+                transaction_id = row[1]
+                product = row[2]
+                quantity = int(row[3])
+                customer = row[4]
+                date = row[5]#parse_date(row[5])#datetime.strptime(row[5], '%d/%m/%Y').strftime('%Y-%m-%d')
+
+                try:
+                    product_obj = Product.objects.get(name__iexact=product)
+                except Product.DoesNotExist:
+                    product_obj = None
+                
+                if product_obj is not None:
+                    # '_' if 'get': false, 'create': true
+                    customer_obj, _ = Customer.objects.get_or_create(name=customer)
+                    # esta es una lista de venta de un vendedor de un perfil a diferentes compradores
+                    salesman_obj = Profile.objects.get(user=request.user)
+                    position_obj = Position.objects.create(product=product_obj, quantity=quantity, created=date)
+
+                    sale_obj, _ = Sale.objects.get_or_create(transaction_id=transaction_id, customer=customer_obj, salesman=salesman_obj, created=date)
+                    sale_obj.positions.add(position_obj)
+                    sale_obj.save()
 
     return HttpResponse()

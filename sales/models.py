@@ -90,7 +90,7 @@ class Position(models.Model):
 
     def __str__(self):
         # le llama f-Strings: f" string {variante-valor} string "
-        return f"id: {self.id}, product: {self.product.name}, quantity: {self.quantity}"
+        return f"created: {self.created}, product: {self.product.name} x {self.quantity} pzas"
 
 
 #! TABLA Sale >>>
@@ -166,8 +166,8 @@ class Sale(models.Model):
         # este solo entrega 1 de lista productos: return f"Sales for the amount of ${self.total_price}, producto: {self.positions.all()[0].product.name}"
         # y este itera en lista productos crea f-strings en array(autosepara x coma)
         # bonita sintaxis de for con f-strings
-        positions_list = ", ".join([f"product: {p.product.name} price: {p.product.price} quantity: {p.quantity}" for p in self.positions.all()])
-        return f"Sales for the amount of ${self.total_price}, ventas: {positions_list}"
+        positions_list = ", ".join([f"{p.product.name} x {p.quantity} pzas" for p in self.positions.all()])
+        return f"{self.transaction_id} - {self.created}: {positions_list}"
 
     """
     *método de instancia
