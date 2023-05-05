@@ -17,9 +17,13 @@ from .utils import *
 #modelos, formularios y utiles de otras apps
 from reports.forms import *
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 #! utilizo una vista basada en una función
 #! por que agregará mucha lógica en esta vista
 #! en su opinion las vistas basadas en funciones son mas legibles que las basadas en clases
+@login_required
 def home_view(request):
 
     sales_df = None
@@ -173,19 +177,19 @@ def home_view(request):
     return render(request,'sales/home.html',context)
 
 
-class SaleListView(ListView):
-
-    model = Sale
-    template_name = 'sales/main.html'
-
-
 """
 la vista espera un parámetro llamado pk de forma predeterminada.
 ! sin necesidad de especificarlo en el parametro de la funcion
 clase DetailView diseñada manejar detalles de instancia de modelo
 El pk se utiliza para identificar la instancia específica,
 por lo que la vista espera un valor pk """
-class SaleDetailView(DetailView):
+class SaleDetailView(LoginRequiredMixin, DetailView):
     
     model = Sale
     template_name = 'sales/detail.html'
+
+
+class SaleListView(LoginRequiredMixin, ListView):
+
+    model = Sale
+    template_name = 'sales/main.html'

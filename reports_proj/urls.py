@@ -20,10 +20,15 @@ from django.urls import path, include
 from django.contrib import admin
 from django.conf import settings
 
+from .views import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('sales.urls', namespace='sales')),
     path('reports/', include('reports.urls', namespace='reports')),
+    path('my_profile/', include('profiles.urls', namespace='profiles')),
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
 ]
 
 #importan media y static

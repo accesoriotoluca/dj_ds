@@ -87,6 +87,10 @@ class Position(models.Model):
         ! sino que es una 'propiedad del modelo' que se utiliza para acceder a los objetos relacionados."""
         sale_obj = self.sale_set.first()
         return sale_obj.id
+    
+    def get_sales_customer(self):
+        sale_obj = self.sale_set.first()
+        return sale_obj.customer.name
 
     def __str__(self):
         # le llama f-Strings: f" string {variante-valor} string "
@@ -167,7 +171,7 @@ class Sale(models.Model):
         # y este itera en lista productos crea f-strings en array(autosepara x coma)
         # bonita sintaxis de for con f-strings
         positions_list = ", ".join([f"{p.product.name} x {p.quantity} pzas" for p in self.positions.all()])
-        return f"{self.transaction_id} - {self.created}: {positions_list}"
+        return f"{self.transaction_id} - {self.created} - {self.salesman.user.username} - {self.customer.name}: {positions_list}: ${self.total_price}"
 
     """
     *método de instancia
@@ -234,11 +238,11 @@ class Sale(models.Model):
 
 
 class CSV(models.Model):
+
+    file_name = models.CharField(max_length=120, null=True)
     
     #upload_to='csvs': inside the media csvs we´ve another folder called csvs where to keep csvs
-    file_name = models.FileField(upload_to='csvs')
-
-    activated = models.BooleanField(default=False)
+    csv_file = models.FileField(upload_to='csvs', null=True)
 
     """
     ? auto_now_add=True:

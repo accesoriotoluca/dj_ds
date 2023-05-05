@@ -9,16 +9,73 @@
 
 {% block content %}
 
-    <p class=""><small>id: {{object.transaction_id}}</small></p>
+    <div class="row mt-3 mb-3">
+
+        <div class="col-3">
+
+            <img src="{{object.customer.logo.url}}" alt="{{object.customer.name}}" class="img-fluid">
+
+        </div>
+
+        <div class="col-9">
+
+            <ul>
+
+                <li>Transaccion id: <b> {{object.transaction_id}} </b> </li>
+                <li>Salesman: <b> {{object.salesman.user.username}} </b> </li>
+
+            </ul>
+
+        </div>
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th scope="col">#</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Customer</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for pos in object.get_positions %}
+
+                    <tr>
+
+                        <th scope="row"> {{forloop.counter}} </th>
+                        <td>{{pos.product.name}}</td>
+                        <td>{{pos.quantity}}</td>
+                        <td>{{pos.price}}</td>
+                        <td>{{pos.get_sales_customer}}</td>
+
+                    </tr>
+                    
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+{% endblock content %}
+
+    <!-- <p class=""><small>id: {{object.transaction_id}}</small></p>
 
     {% for n in object.positions.all %}
 
-        Producto: {{object.product.name}} / Precio: {{object.product.price}} x {{object.quantity}} pzas / Subtotal: ${{object.price}}
+        Producto: {{n.product.name}} / Precio: {{n.product.price}} x {{n.quantity}} pzas / Subtotal: ${{n.price}}
         <br>
 
     {% endfor %}
     <br>
 
-    <h3 class="">Total: {{object.total_price}}</h3>
-    
-{% endblock content %}
+    <h3 class="">Total: {{object.total_price}}</h3> -->
