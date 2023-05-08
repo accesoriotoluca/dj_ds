@@ -1,9 +1,12 @@
 
+""" comment """
+#comment
+
 # todo- importar en color amarillo:
 #^ indica módulos/funciones definidos en Django
 
 #importar en color verde:
-#^ indica 'clases definidas en Django' q 'heredan de otras clases'
+"""indica 'clases definidas en Django' q 'heredan de otras clases'"""
 
 
 from django.http import HttpRequest, HttpResponse, JsonResponse
@@ -286,18 +289,6 @@ def render_pdf_view(request, pk):
        #* </pre>' cadena resultante muestre texto preformateado,
        #* facilitar la lectura y la depuración de errores
        #* usuario verá HTML con mensaje error en navegador en lugar de PDF esperado
-
-       """
-       ! usuario verá HTML con mensaje error en navegador en lugar de PDF esperado
-       todo ario verá HTML con mensaje error en navegador en lugar de PDF esperado
-       * usuario verá HTML con mensaje error en navegador en lugar de PDF esperado
-       & usuario verá HTML con mensaje error en navegador en lugar de PDF esperado
-       ! usuario verá HTML con mensaje error en navegador en lugar de PDF esperado
-       ^ usuario verá HTML con mensaje error en navegador en lugar de PDF esperado
-       ? usuario verá HTML con mensaje error en navegador en lugar de PDF esperado
-       ^usuario verá HTML con mensaje error en navegador en lugar de PDF esperado
-       # usuario verá HTML con mensaje error en navegador en lugar de PDF esperado"""
-       # usuario verá HTML con mensaje error en navegador en lugar de PDF esperado
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     
     return response
