@@ -3,6 +3,16 @@
 
 {% block scripts %}
 
+    <!--
+    ! defer retrasa ejecución de archivo script hasta q cargue página.
+    mejora rendimiento, velocidad carga.
+    evita scripts ejecuten antes cargar elementos necesarios.
+    solo script externos en atributo "src".
+    no afecta orden d cargan, solo retrasa su ejecución hasta q cargue página.
+    evita conflictos, errores entre scripts, elementos de página, como imágenes, estilos CSS.
+    no recomendable en scripts con funciones de seguimiento o análisis.
+    solo funciona para script externos, no los incluidos en HTML.
+    debe colocarse antes de etiqueta de cierre del elemento "head" para qc aplique correctamente. -->
     <script src="{% static 'reports/upload.js' %}" defer></script>
 
 {% endblock scripts %}
@@ -19,13 +29,22 @@
     <br>
 
     <div id="alert-box"></div>
-    
+
+    <!--
+        "dropzone" crear zona d carga d archivos en formulario. 
+        "dz" aplica estilos específicos a zona d carga d archivos. -->
     <form id="my-dropzone" class="dropzone dz">
 
         {% csrf_token %}
-
+        
+        <!--
+            ! "fallback" opción de respaldo para navegadores
+            ! q no admiten carga d archivos por Drag-and-Drop.
+            * "fallback" incluye campo entrada d archivo regular
+            * para permitir carga d archivos en método d selección d archivo. -->
         <div class="fallback">
 
+            <!--! Este es un form HTML su nombre es file y su input es del tipo file -->
             <input name="file" type="file" multiple />
 
         </div>

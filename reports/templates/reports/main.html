@@ -10,23 +10,37 @@
 
 {% block content %}
 
-    <h1>Report list: </h1>
+    <h3>Reports: </h3>
     <br>
 
     {% for i in object_list %}
 
+        <!--* "card", "card-img-top", "card-body", "card-title" y "card-text": clases de Bootstrap, dar estilo y estructura a elementos dentro de tarjeta -->
+        <!--!"card" definir contenedor, mostrar información como tarjeta  -->
         <div class="card mb-3">
 
             {% if i.image %}
 
+                <!--! "card-img-top" agregar imagen parte superior de tarjeta -->
                 <img src="{{i.image.url}}" class="card-img-top" alt="{{i.name}}">
                 
             {% endif %}
             
+            <!--! "card-body" contener contenido principal de tarjeta -->
             <div class="card-body">
 
-                <h5 class="card-title">{{i.name}}</h5>
-                <p class="card-text">{{i.remarks|truncatewords:2}}</p>
+                <!--!  "card-title" agregar título a tarjeta -->
+                <h5 class="card-title">{{i.name|upper}}</h5>
+                <h6 class="card-title">CREADO EN: {{i.created}}</h6>
+
+                <!--
+                    ! "card-text" agrega texto descriptivo debajo d título
+                    ? "|truncatewords:2":
+                    * "|default" establece valor predeterminado en caso de que no tenga ningún valor,
+                    * "|upper" "|lower" convertir texto mayúsculas, minúsculas
+                    * "|title" capitalizar cada palabra en cadena texto.
+                    ! Se pueden concatenar varios parámetros usando la sintaxis "|" -->
+                <p class="card-text">{{i.remarks|truncatewords:2|upper}}</p>
                 <a href="{{ i.get_absolute_url }}" class="btn btn-primary">Details</a>
                 <a href="{% url 'reports:pdf' i.id %}" class="btn btn-danger">PDF</a>
 

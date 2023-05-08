@@ -1,27 +1,46 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
 
-  <title>PDF {{obj.name}} </title>
-  <style>
-    .image{
-        width: 100%;
-        height: auto;
-    }
-  </style>
-</head>
-<body>
+  <head>
+
+    <meta charset="utf-8">
+
+    <title>PDF {{obj.name}} </title>
+
+    <!--
+      * Etiqueta 'style':
+      # definir código CSS q aplicará solo al HTML donde se encuentra
+      ! No afecta otros HTML solo si enlace archivo CSS externo en los mismos
+      * style c puede colocar en head o body, es buena práctica colocar en head  -->
+    <style>
+
+      .image{
+          width: 100%;
+          height: auto;
+      }
+
+    </style>
+
+  </head>
+
+  <body>
 
     <h1>{{obj.name}}</h1>
     <hr>
+
+    <!--* image: aplicar estilos CSS a imagen, como ancho d 100%, altura automática  -->
     <img src="{{obj.image.path}}" class="image">
     <br>
+
     <h3>Remarks</h3>
+
     <p> {{obj.remarks}} </p>
     <hr>
+
+    <!--! 'b' agregar texto en negrita 'etiqueta en desuso' c recomienda utilizar etiqueta 'strong' -->
     <p>author: <b> {{obj.author.user.username}} </b> </p>
     <p>created: <b> {{obj.created}} </b> </p>
 
-</body>
+  </body>
+
 </html>

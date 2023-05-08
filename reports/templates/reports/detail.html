@@ -11,6 +11,10 @@
 
     {% if object.image %}
 
+        <!--
+        ! "img-fluid": c usa en biblioteca CSS Bootstrap
+        * imágenes c ajusten automáticamente al ancho del contenedor que las rodea
+        * las hace responsivas, adaptables a diferentes tamaños de pantalla -->
         <img src="{{object.image.url}}" class="img-fluid" alt="{{object.name}}">
 
     {% endif %}

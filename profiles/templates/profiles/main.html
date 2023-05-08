@@ -19,13 +19,28 @@
     
     {% endif %}
 
+    <!-- 
+    ! "text-center" en un div:
+    * estilo predefinido en CSS, alinear texto en centro, horizontalmente, texto dentro contenedor/div -->
     <div class="text-center">
 
+        <!--
+        ! alt= descripción alternativa d imagen
+        * si imagen no puede cargar o para personas con discapacidad visual q usan lector d pantalla
+        * debe describir contenido y función d imagen -->
         <img src="{{profile.avatar.url}}" alt="my-profile" class="avatar-big">
 
     </div>
 
     <br>
+
+    <!-- 
+    ! enctype="multipart/form-data" atributo en <form>
+    especifica cómo se codifica y se envía, el formulario al servidor web.
+    permitir que el formulario contenga archivos adjuntos
+    (imágenes, videos u  multimedia)
+    formulario se codifican en formato 'MIME multiparte': permite enviar archivos binarios a través de la red.
+    ! si se usa debe usarse en combinación con POST o el envío de datos no funcionará -->
 
     <form action="" method="POST" enctype="multipart/form-data">
 

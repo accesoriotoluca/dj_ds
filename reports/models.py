@@ -7,6 +7,14 @@ class Report(models.Model):
     name = models.CharField(max_length=120)
 
     #upload_to='reports': inside the media reports we´ve another folder called reports where to keep charts base on date from date to
+    """
+    ! parámetro upload_to:
+    * especifica directorio destino donde guardará archivos subidos en servidor.
+    * En este caso, imágenes subidas guardarán en "reports",
+        * en directorio raíz de archivos estáticos (STATIC_ROOT) d app
+    * si se está ejecutando app en 'entorno de desarrollo':
+    * imágenes subidas guardarán en 'settings.py MEDIA_ROOT'
+    * En 'entorno de producción', imágenes se guardarán en el directorio especificado por STATIC_ROOT."""
     image = models.ImageField(upload_to='reports',blank=True)
 
     remarks = models.TextField()
@@ -35,9 +43,18 @@ class Report(models.Model):
     def __str__(self):
         return str(self.name)
     
-    #TODO GPT
-    # solo se que ordena en templete lista de mas reciente al mas antiguo
-    # pero imagino que depende de la instancias que se establezca
-    # y el menos imagino que es de menor a mayor y por defecto esta en +
+    """
+    ! '-created': ordena 'templete lista' del + reciente al + antiguo según instancia created
+    * ordering es convención para indicar un ordenamiento para objetos de modelo
+    * "+" para ordenar en forma ascendente"""
     class Meta:
         ordering = ('-created',)
+    """
+    todo | Mas ejemplos:
+
+    ! ordering = ('nombre',):
+    * ordena en orden ascendente según campo "nombre"
+
+    ! ordering = ('campo1', '-campo2'):
+    * primero orden ascendente según "campo1",
+    * luego orden descendente según "campo2" """
