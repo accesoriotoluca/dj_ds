@@ -7,5 +7,5 @@ class ProfileForm(forms.ModelForm):
 
         """ 
         !exclude: c usa en la def de 1 formulario mediante clase Meta:
-        * para excluir campos específicos de un modelo del formulario """
+        para excluir campos específicos de un modelo del formulario """
         exclude = ('user',)

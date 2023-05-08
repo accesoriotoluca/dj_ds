@@ -10,24 +10,24 @@ def my_profile_view(request):
     profile = Profile.objects.get(user=request.user)
 
     """
-    !request.POST or None:
-    *si POST, formulario usa datos para nueva instancia.
-    *Si no se envió POST, formulario se creará vacío.
+    ^ request.POST or None:
+    si POST, formulario usa datos para nueva instancia.
+    Si no se envió POST, formulario se creará vacío.
 
-    !request.FILES or None:
-    *indicarle al formulario que puede esperar archivos en la solicitud
-    *archivo se almacena en la memoria del servidor
-    *si POST con archivos, formulario usa archivos para nueva instancia.
-    *Si no se enviaron archivos, formulario se creará sin campos de archivo.
+    ^request.FILES or None:
+    indicarle al formulario que puede esperar archivos en la solicitud
+    archivo se almacena en la memoria del servidor
+    si POST con archivos, formulario usa archivos para nueva instancia.
+    Si no se enviaron archivos, formulario se creará sin campos de archivo.
 
-    todo si POST (datos y/o archivos), formulario actualiza o crea instancia en Profile
-    todo Si POST vacío (ni datos ni archivos): formulario no actualiza o crea.
-    todo Si no POST, formulario mostrará datos existentes de perfil de usuario.
+    * si POST (datos y/o archivos), formulario actualiza o crea instancia en Profile
+    * Si POST vacío (ni datos ni archivos): formulario no actualiza o crea.
+    * Si no POST, formulario mostrará datos existentes de perfil de usuario.
     
-    ! instance=profile: 
-    *si profile tiene datos
-    *formulario carga datos
-    *Si no formulario carga vacío """
+    ^ instance=profile: 
+    si profile tiene datos
+    formulario carga datos
+    Si no formulario carga vacío """
     form = ProfileForm(request.POST or None, request.FILES or None, instance=profile)
     confirm = False
 

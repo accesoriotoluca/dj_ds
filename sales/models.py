@@ -23,7 +23,7 @@ class Position(models.Model):
     - tabla: Position, columna 'product' (internamente:'product_id'), tiene los id's predeterminado de tabla: Product """
     #! cuando se elemine un productose eliminan las posiciones...
     #! Si, si elimino producto elimino position/subtotal y la venta queda sin referencia de producto/precio/cantidad.
-    #TODO: grabar string en db, en columna q copie y pegue, se eliminan objetos, pero string ('producto/precio/cantidad') xq en ADMIN aun aparece.
+    #& grabar string en db, en columna q copie y pegue, se eliminan objetos, pero string ('producto/precio/cantidad') xq en ADMIN aun aparece.
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
 
     quantity = models.PositiveIntegerField()
@@ -178,7 +178,7 @@ class Sale(models.Model):
      proporciona URL absoluta d1 instancia particular de un modelo
      'URL absoluta'= 'URL completa' incluye "esquema, nombre de dominio, puerto, ruta"
     ! este methodo se llama del templete 'lista'
-    ! tanto la vista como el templete y este metodo:
+    ! tanto la vista como el templete y este me&
     ! iteran por todas las instancias creando una lista de urls"""
     def get_absolute_url(self):
         
