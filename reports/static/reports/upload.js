@@ -5,6 +5,7 @@ const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
 const alertBox = document.getElementById('alert-box')
 
 /*
+este es un ejemplo de 1 comentario normal 
 ~ función "handleAlerts":
 * toma dos argumentos: "type" y "msg".
 * establece "alertBox" como: 

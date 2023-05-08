@@ -1,6 +1,8 @@
 
 """ comment """
 #comment
+""" comment """
+#comment
 
 # todo- importar en color amarillo:
 #^ indica módulos/funciones definidos en Django

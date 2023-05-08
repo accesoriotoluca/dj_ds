@@ -26,4 +26,12 @@ todo CSRF_COOKIE': 'pZnG9yn7VP5YuzpKiCm8dl270TACZV6H'
 
 todo NARANJA OTRO
 
+"workbench.startupEditor": "none",
+"editor.minimap.enabled": false,
+"git.autofetch": true,
+"explorer.confirmDragAndDrop": false,
+"explorer.confirmDelete": false,
+
+# ejemplo de comentario
+
 """
