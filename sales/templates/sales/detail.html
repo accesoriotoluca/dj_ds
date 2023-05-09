@@ -6,6 +6,45 @@
 
 {% endblock title %}
 
+<!-- 
+? checar
+bard: row: La clase de row se utiliza para crear una fila de elementos en una tabla. Por lo general, se usa para agrupar elementos relacionados, como una fila de encabezado, una fila de cuerpo o una fila de pie de página.
+bing: row: Es una clase de Bootstrap que se utiliza para crear una fila en una grilla de columnas. Esta clase se utiliza para envolver las columnas y asegurarse de que estén alineadas correctamente12
+gpt: row: es una clase de Bootstrap que se utiliza para crear una fila en una cuadrícula de columnas. En este caso, se utiliza para agrupar la imagen y la información de la transacción en una fila.
+
+bard: img-fluid: La clase img-fluid se usa para hacer que una imagen responda. Esto significa que la imagen cambiará de tamaño automáticamente para ajustarse a su contenedor.
+bing: img-fluid: Es una clase de Bootstrap que se utiliza para hacer que las imágenes sean responsivas. Esto significa que la imagen se ajustará automáticamente al tamaño del contenedor en el que se encuentra12
+gpt: img-fluid: es una clase de Bootstrap que se utiliza para hacer que la imagen se ajuste al ancho del contenedor. En este caso, se utiliza para hacer que la imagen del logotipo de la empresa se ajuste al ancho de la columna.
+
+bard: col-3: La clase col-3 se usa para crear una columna de 3 columnas de ancho. Esta clase se usa normalmente junto con la clase de fila para crear un diseño de cuadrícula.
+bing: col-3 y col-9: Son clases de Bootstrap que se utilizan para crear columnas en una grilla de columnas. La clase col-3 se utiliza para crear una columna de 3 espacios y la clase col-9 se utiliza para crear una columna de 9 espacios12
+gpt: col-3 y col-9: son clases de Bootstrap que se utilizan para definir el ancho de las columnas en una cuadrícula de columnas. En este caso, se utiliza para dividir la fila en dos columnas, una columna de ancho 3 (que contiene la imagen) y una columna de ancho 9 (que contiene la información de la transacción).
+
+bard: col-9: La clase col-9 se usa para crear una columna de 9 columnas de ancho. Esta clase se usa normalmente junto con la clase de fila para crear un diseño de cuadrícula.
+bing: col-3 y col-9: Son clases de Bootstrap que se utilizan para crear columnas en una grilla de columnas. La clase col-3 se utiliza para crear una columna de 3 espacios y la clase col-9 se utiliza para crear una columna de 9 espacios12
+
+gpt: table: es una etiqueta HTML que se utiliza para crear una tabla. En este caso, se utiliza para mostrar los detalles de los productos vendidos en la transacción.
+bard: table: La etiqueta de table se utiliza para crear una tabla. Una tabla es una estructura de datos tabulares que se utiliza para presentar datos en un formato de fila y columna.
+bing: table: Es una etiqueta HTML que se utiliza para crear tablas31
+
+gpt: thead: es una etiqueta HTML que se utiliza para crear la sección de encabezado de una tabla. En este caso, se utiliza para crear la fila de encabezado que muestra los nombres de las columnas de la tabla.
+bard: thead: La etiqueta de thead se utiliza para definir la fila de encabezado de una tabla. La fila de encabezado contiene los nombres de las columnas.
+bing: thead: Es una etiqueta HTML que se utiliza para agrupar los encabezados de una tabla34
+
+gpt: tr: es una etiqueta HTML que se utiliza para crear una fila en una tabla. En este caso, se utiliza
+bard: tr: La etiqueta tr se usa para definir una fila en una tabla. Cada fila contiene una o más celdas.
+bing: tr: Es una etiqueta HTML que se utiliza para crear filas en una tabla34
+
+bard: th: La etiqueta th se usa para definir una celda de encabezado en una tabla. Las celdas de encabezado se utilizan para mostrar los nombres de las columnas.
+bing: th: Es una etiqueta HTML que se utiliza para crear encabezados en una tabla34
+
+bard: tbody: La etiqueta tbody se utiliza para definir el cuerpo de una tabla. El cuerpo de una tabla contiene las celdas de datos.
+bing: tbody: Es una etiqueta HTML que se utiliza para agrupar el contenido principal de una tabla34
+
+bard: td data table: La etiqueta td se usa para definir una celda de datos en una tabla. Las celdas de datos se utilizan para mostrar los valores de los datos.
+bing: td: Es una etiqueta HTML que se utiliza para crear celdas en una tabla34
+ -->
+
 
 {% block content %}
 
@@ -67,15 +106,3 @@
     </div>
 
 {% endblock content %}
-
-    <!-- <p class=""><small>id: {{object.transaction_id}}</small></p>
-
-    {% for n in object.positions.all %}
-
-        Producto: {{n.product.name}} / Precio: {{n.product.price}} x {{n.quantity}} pzas / Subtotal: ${{n.price}}
-        <br>
-
-    {% endfor %}
-    <br>
-
-    <h3 class="">Total: {{object.total_price}}</h3> -->
