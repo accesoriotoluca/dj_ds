@@ -11,13 +11,13 @@ class Product(models.Model):
     price = models.FloatField(help_text='in US dollars $')
 
     """
-    ? auto_now_add=True:
-    registrar: fecha, hora, creación objeto x primera vez, no se actualiza
-    ? auto_now=True:
-    registrar: fecha, hora, actualiza cada vez q guarda objeto
+    ^ auto_now_add=True:
+    registrar fecha, hora, creación objeto x primera vez, no se actualiza
+    ^ auto_now=True:
+    registrar fecha, hora, actualiza cada vez q guarda objeto
     abro, no edito, guardo: llama al método save() que actualiza todos los campos incluyendo 'auto_now'
-    * auto_now_add=True, auto_now=True: no aparece en el formulario de admin, interno automático
-    * blank=true: si aparece en el formulario de admin, establecer manualmente """
+    * auto_now_add=True, auto_now=True: no aparece en admin, interno genera automático
+    * blank=true: si aparece en admin, establecer manualmente """
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

@@ -5,13 +5,13 @@ const modalBody = document.getElementById('modal-body')
 const reportName = document.getElementById('id_name')
 const reportBtn = document.getElementById('report-btn')
 
-/**/
+
 const img = document.getElementById('img')
 if(img){
     reportBtn.classList.remove('not_visible')
 }
 
-/**/
+
 const alertBox = document.getElementById('alert-box')
 const handleAlerts = (type, msg) => {
     alertBox.innerHTML = 
@@ -20,7 +20,7 @@ const handleAlerts = (type, msg) => {
         </div>`
 }
 
-/**/
+
 reportBtn.addEventListener('click',()=>{
 
     img.setAttribute('class','w-100')
