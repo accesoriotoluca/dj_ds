@@ -302,26 +302,31 @@ def csv_upload_view(request):
 
         #obtiene csv de post
         csv_file = request.FILES.get('file')
-
-        #obj == istancia modelo CSV pp: por que son 2 variables, que hace created y que especifican los parametros de get or create, si solo establece el titulo, los demás campos los deja en blanco, o aunque se establesca una variable 1 dato del modelo se guarda mas adelante cuando tiene el archivo guardado en la instancia?
+        """
+        obj == istancia modelo CSV
+        *create es booleano: si get created == false, si create created == true
+        *crea objeto SIN guardar, establece solo nombre, mas abajo guarda """
         obj, created = CSV.objects.get_or_create(file_name=csv_file_name)
 
-        # si se creo la instancia pp: created es un valor booleano?
+        # si se creo la instancia
         if created:
-
             """
             instancia CSV.csv_file = archivo CSV y guarda
             solo tiene 2 campos y 2 created automáticos"""
             obj.csv_file = csv_file
             obj.save()
-            
             """
-            pp: que hace with?, open sirve para abrir cualquier archivo?, .path es para referencias la ruta donde se encuentra el archivo?, 'r' significa read? as f es para establecerle una variable o seudónimo? 
-            
-            Abre csv modo read """
+            ^ with:
+            construcción Python 'manejar recursos externos'... archivos, conexiones d red, DB
+            En este caso, with c usa abrir cerrar bj.csv_file.path d forma segura
+            si ocurre 1 excepción durante lectura, se asegura que archivo cerrará correctamente
+            ^ open:
+            función Python para abrir archivos en modo lectura o escritura
+            argumento1 = ruta, argumento2 = modo d apertura, r = modo d lectura
+            *Solo Abre csv modo read """
             with open(obj.csv_file.path,'r') as f:
                 
-                #lo lee pp: reader() es una funcion para abrir un csv?
+                #reader() ya lo lee.. usa algoritmo propio, procesar formatos, comas puntos separadores
                 reader = csv.reader(f)
 
                 #Omitir primera línea d CSV
@@ -338,13 +343,13 @@ def csv_upload_view(request):
                     quantity = int(row[2])
                     customer = row[3]
                     date = datetime.strptime(row[4], '%m/%d/%Y').strftime('%Y-%m-%d')#parse_date(row[4])
-
-                    #pp: en este caso Product.DoesNotExist funciona sin crear una relacion a Product.objects.get(name__iexact=product), es decir except ya sabe que en try se esta buscando un objeto y si el modelo producto se establece como "DoesNotExist", convierte la variable product_obj a None? except se activa con cualquier cosa que se especifique y que suceda en try, sin tener que poner una referencia?
-
-                    #busca product name == product línea CSV
+                    """
+                    Product.DoesNotExist 'puede' ocurrir al intentar recuperar objeto
+                    Si no encontra objeto con nombre, se levanta 'excepción' Product.DoesNotExist
+                    busca product name == product línea CSV
+                    Si producto no existe product_obj == None """
                     try:
                         product_obj = Product.objects.get(name__iexact=product)
-                    #Si producto no existe product_obj == None.
                     except Product.DoesNotExist:
                         product_obj = None
 
